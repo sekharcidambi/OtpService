@@ -1,6 +1,7 @@
 package com.cid.otpservice.controller;
 
 import com.cid.otpservice.service.OtpService;
+import com.cid.otpservice.model.Otp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,26 +18,19 @@ public class OtpController {
     @Autowired
     private OtpService otpService;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> testOtp() {
-        logger.info("In the controller");
-        return ResponseEntity.ok("Controller done ");
+    @PostMapping("/generate")
+    public ResponseEntity<String> generateOtp(@RequestParam String recipient, @RequestParam Otp.OtpChannel channel) {
+        String otp = otpService.generateOtp(recipient, channel);
+        return ResponseEntity.ok("OTP sent to " + recipient + " via " + channel);
     }
 
-    @PostMapping("/send")
-    public ResponseEntity<String> sendOtp(@RequestParam String email) {
-        logger.info("Sending OTP to email: {}", email);
-        otpService.sendOtp(email);
-        return ResponseEntity.ok("OTP sent to email: " + email);
-    }
-
-    @PostMapping("/verify")
-    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
-        boolean isVerified = otpService.verifyOtp(email, otp);
-        if (isVerified) {
-            return ResponseEntity.ok("OTP verified successfully!");
+    @PostMapping("/validate")
+    public ResponseEntity<String> validateOtp(@RequestParam String recipient, @RequestParam String otp) {
+        boolean isValid = otpService.validateOtp(recipient, otp);
+        if (isValid) {
+            return ResponseEntity.ok("OTP is valid");
         } else {
-            return ResponseEntity.status(400).body("Invalid or expired OTP.");
+            return ResponseEntity.badRequest().body("Invalid OTP");
         }
     }
 }
