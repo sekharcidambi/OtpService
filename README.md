@@ -85,6 +85,25 @@ The application uses basic authentication. The default credentials are:
 
 You can change these in the `application.properties` file.
 
+# Future roadmap
+Based on the current implementation of this OTP service, here are some additional features to add:
+
+1. Rate Limiting: Implement a mechanism to limit the number of OTP requests per recipient within a given time frame to prevent abuse.
+2. OTP Resend Functionality: Add an endpoint to resend the OTP if the user doesn't receive it, with a cooldown period between resends.
+3. OTP Expiration Cleanup: Create a scheduled task to automatically remove expired OTPs from the database.
+4. Configurable OTP Settings: Allow customization of OTP length, expiration time, and other parameters through configuration files or database settings.
+5. OTP Attempt Tracking: Implement a system to track failed OTP validation attempts and lock out users after a certain number of failures.
+7. Audit Logging: Add comprehensive logging for OTP generation, validation, and other important events for security and debugging purposes.
+8. Multi-tenancy Support: If applicable, add support for multiple organizations or applications using the same OTP service.
+9. API Key Authentication: Implement an API key system for authenticating client applications that use the OTP service.
+10. Metrics and Monitoring: Add endpoints or integrate with monitoring tools to track usage statistics and service health.
+11. Internationalization: Support multiple languages for OTP messages and error responses.
+12. OTP Delivery Status Tracking: Implement a way to track whether the OTP was successfully delivered (especially useful for SMS).
+13. Backup OTP Channel: Allow users to specify a backup channel (e.g., email if SMS fails) for OTP delivery.
+14. OTP Templates: Create customizable templates for OTP messages to allow for branding and different use cases.
+15. Integration with User Management: If applicable, integrate the OTP service with a user management system for additional security checks.
+16. OTP Blacklisting: Implement a system to blacklist certain OTPs that should never be generated (e.g., sequential numbers, repeated digits).
+
 ## Contributing
 
 Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests.
