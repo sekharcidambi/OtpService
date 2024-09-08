@@ -1,75 +1,134 @@
-<h1 align="center"> OTP Service </h1> <br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Service README</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        #toc {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        #toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>OTP Service</h1>
+    
+    <div id="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#configuration">Configuration</a></li>
+            <li><a href="#building">Building the Application</a></li>
+            <li><a href="#running">Running the Application</a></li>
+            <li><a href="#api">API Endpoints</a></li>
+            <li><a href="#testing">Testing</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#contributing">Contributing</a></li>
+            <li><a href="#license">License</a></li>
+        </ul>
+    </div>
 
-<p align="center">
-  Java spring boot microservice to send an OTP to an email address and verify the OTP
-</p>
+    <p>This is a Spring Boot application that provides OTP (One-Time Password) generation and validation services with support for multiple channels (Email and SMS).</p>
 
+    <h2 id="features">Features</h2>
+    <ul>
+        <li>Generate OTP for a given recipient via Email or SMS</li>
+        <li>Validate OTP</li>
+        <li>Automatic OTP expiration</li>
+        <li>Integration with Twilio for SMS sending</li>
+    </ul>
 
-## Table of Contents
+    <h2 id="prerequisites">Prerequisites</h2>
+    <ul>
+        <li>Java 11 or higher</li>
+        <li>Maven 3.6 or higher</li>
+        <li>Twilio account (for SMS functionality)</li>
+    </ul>
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Quick Start](#quick-start)
-- [Testing](#testing)
-- [API](#requirements)
+    <h2 id="configuration">Configuration</h2>
+    <ol>
+        <li>Clone the repository:
+            <pre><code>git clone https://github.com/your-username/otp-service.git
+cd otp-service</code></pre>
+        </li>
+        <li>Update <code>src/main/resources/application.properties</code> with your Twilio credentials:
+            <pre><code>twilio.account.sid=your_account_sid_here
+twilio.auth.token=your_auth_token_here
+twilio.phone.number=your_twilio_phone_number_here</code></pre>
+        </li>
+    </ol>
 
+    <h2 id="building">Building the Application</h2>
+    <p>To build the application, run:</p>
+    <pre><code>mvn clean install</code></pre>
 
+    <h2 id="running">Running the Application</h2>
+    <p>To run the application, use:</p>
+    <pre><code>mvn spring-boot:run</code></pre>
+    <p>The application will start on <code>http://localhost:8080</code>.</p>
 
+    <h2 id="api">API Endpoints</h2>
+    <ol>
+        <li>Generate OTP:
+            <pre><code>POST /api/otp/generate
+Parameters:
+- recipient: Email address or phone number
+- channel: EMAIL or SMS</code></pre>
+        </li>
+        <li>Validate OTP:
+            <pre><code>POST /api/otp/validate
+Parameters:
+- recipient: Email address or phone number
+- otp: The OTP to validate</code></pre>
+        </li>
+    </ol>
 
-## Introduction
+    <h2 id="testing">Testing</h2>
+    <p>To run the tests, use:</p>
+    <pre><code>mvn test</code></pre>
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e91606af4a364076a7058c5ea1c006a8)](https://www.codacy.com/app/joneubank/microservice-template-java?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=overture-stack/microservice-template-java&amp;utm_campaign=Badge_Grade)
-[![CircleCI](https://circleci.com/gh/overture-stack/microservice-template-java/tree/master.svg?style=shield)](https://circleci.com/gh/overture-stack/microservice-template-java/tree/master)
+    <h2 id="security">Security</h2>
+    <p>The application uses basic authentication. The default credentials are:</p>
+    <ul>
+        <li>Username: user</li>
+        <li>Password: test</li>
+    </ul>
+    <p>You can change these in the <code>application.properties</code> file.</p>
 
-Java spring boot microservice to send an OTP to an email address and verify the OTP. Users mailersend to send the email OTP.
+    <h2 id="contributing">Contributing</h2>
+    <p>Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests.</p>
 
-## Features
-Generate and send an OTP to a email address
-Verify the OTP associated with an email address
-
-
-## Requirements
-Mailersend api key to send emails
-
-
-## Quick Start
-
-
-### Run Local
-```bash
-$ mvn spring-boot:run
-```
-
-Application will run by default on port `8080`
-
-Configure the port by changing `server.port` in __application.yml__
-
-
-### Run Docker
-
-First build the image:
-```bash
-$ docker-compose build
-```
-
-When ready, run it:
-```bash
-$ docker-compose up
-```
-
-Application will run by default on port `1234`
-
-Configure the port by changing `services.api.ports` in __docker-compose.yml__. Port 1234 was used by default so the value is easy to identify and change in the configuration file.
-
-
-## Testing
-TODO: Additional instructions for testing the application.
-
-
-## API
-TODO: API Reference with examples, or a link to a wiki or other documentation source.
-
-## Acknowledgements
-TODO: Show folks some love.
+    <h2 id="license">License</h2>
+    <p>This project is licensed under the MIT License - see the LICENSE.md file for details.</p>
+</body>
+</html>
